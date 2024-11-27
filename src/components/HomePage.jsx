@@ -59,7 +59,7 @@ const HomePage = () => {
       title: "Brainstorming Sessions",
     },
     { src: "/images/Industrial Mentoring.jpeg", title: "Industrial Mentoring" },
-    { src: "/images/Deepak is Kanguva.jpeg", title: "Deepak is Kanguva" },
+    { src: "/images/Deepak is Kanguva.jpeg", title: "Planning" },
     { src: "/images/seam-prototype.jpg", title: "Prototype Development" },
     { src: "/images/seam-testing.jpg", title: "Security Testing" },
     { src: "/images/seam-final.jpg", title: "Final Product" },
