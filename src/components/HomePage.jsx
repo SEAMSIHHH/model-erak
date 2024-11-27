@@ -1,16 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
+import { useMediaQuery, useTheme, IconButton } from "@mui/material";
 import { Box, Typography, Button, Grid, Paper, Container } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Fade } from "react-awesome-reveal";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { motion } from "framer-motion";
+
+import {
+  Security as SecurityIcon,
+  CloudSync as CloudSyncIcon,
+  VerifiedUser as VerifiedUserIcon,
+  LinearScale as LinearScaleIcon,
+  PlayArrow as PlayArrowIcon,
+  Pause as PauseIcon,
+} from "@mui/icons-material";
 
 const HomePage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Indian Color Palette
+  const indianColors = {
+    primary: "#1A73E8", // Modern Indigo
+    secondary: "#FF9800", // Saffron
+    accent: "#4CAF50", // Emerald Green
+    background: "#F0F4C3", // Soft Khadi
+  };
+
+  // Image Slider Settings
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    beforeChange: (current, next) => setCurrentSlide(next),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  // Development Process Images
+  const developmentImages = [
+    { src: "/images/seam-concept.jpg", title: "Seam Concept" },
+    {
+      src: "/images/Brainstroming sessions.jpeg",
+      title: "Brainstorming Sessions",
+    },
+    { src: "/images/Industrial Mentoring.jpeg", title: "Industrial Mentoring" },
+    { src: "/images/Deepak is Kanguva.jpeg", title: "Deepak is Kanguva" },
+    { src: "/images/seam-prototype.jpg", title: "Prototype Development" },
+    { src: "/images/seam-testing.jpg", title: "Security Testing" },
+    { src: "/images/seam-final.jpg", title: "Final Product" },
+  ];
+
   return (
     <Box
       sx={{
         width: "100%",
         minHeight: "100vh",
-        background:
-          "linear-gradient(180deg, #ffffff 10%, rgba(255, 190, 50, 0.1) 50%, rgba(10, 190, 40, 0.05) 100%)",
+        background: `linear-gradient(135deg, 
+          ${indianColors.background} 40%, 
+          ${indianColors.background}CC 50%, 
+          ${indianColors.background}99 100%)`,
+        position: "relative",
+        overflow: "hidden",
+        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
       }}
     >
       {/* Hero Section */}
@@ -48,11 +114,12 @@ const HomePage = () => {
             size="large"
             component={Link}
             to="/authenticate"
+            startIcon={<SecurityIcon />}
             sx={{
               mt: 4,
               px: 4,
               py: 2,
-              backgroundColor: "#4caf50",
+              backgroundColor: "#2962FF",
               color: "white",
               fontWeight: "bold",
               borderRadius: "25px",
@@ -304,6 +371,74 @@ const HomePage = () => {
           </Container>
         </Fade>
       </Box>
+
+      {/* Development Process Slider */}
+      <Container sx={{ my: 6, position: "relative", zIndex: 2 }}>
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: "center",
+            fontWeight: "bold",
+            mb: 1,
+            color: indianColors.primary,
+          }}
+        >
+          Development Journey
+        </Typography>
+        <Box
+          sx={{
+            position: "relative",
+            width: "100%",
+            maxWidth: 800,
+            margin: "auto",
+          }}
+        >
+          <Slider {...sliderSettings}>
+            {developmentImages.map((image, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  p: 6,
+                }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{
+                    opacity: index === currentSlide ? 1 : 0.7,
+                    scale: index === currentSlide ? 1 : 0.9,
+                  }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    style={{
+                      maxWidth: "150%",
+                      maxHeight: 400,
+                      borderRadius: "15px",
+                      boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      textAlign: "start",
+                      mt: 0,
+                      color: indianColors.primary,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {image.title}
+                  </Typography>
+                </motion.div>
+              </Box>
+            ))}
+          </Slider>
+        </Box>
+      </Container>
 
       {/* Footer */}
       <Box
