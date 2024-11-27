@@ -10,6 +10,7 @@ import {
 import FaceAuthentication from "./components/FaceAuthentication";
 import AuthenticatedProfile from "./components/AuthenticatedProfile";
 import Header from "./components/Header";
+import TeamPage from "./components/TeamPage";
 import HomePage from "./components/HomePage"; // Import HomePage component
 
 function App() {
@@ -141,6 +142,8 @@ function App() {
               )
             }
           />
+          <Route path="/TeamPage" element={<TeamPage />} />{" "}
+          {/* Add ContactPage route */}
         </Routes>
       </Box>
     </Container>

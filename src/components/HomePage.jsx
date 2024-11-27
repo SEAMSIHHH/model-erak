@@ -468,7 +468,7 @@ const HomePage = () => {
         <Button
           variant="contained"
           component={Link}
-          to="/contact"
+          to="/TeamPage"
           sx={{
             backgroundColor: "#4caf50",
             ":hover": {
