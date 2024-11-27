@@ -103,8 +103,8 @@ const HomePage = () => {
             variant="h6"
             sx={{
               mt: 2,
-              color: "#4caf50",
-              fontWeight: "400",
+              color: "#000",
+              fontWeight: "bold",
             }}
           >
             Secure Encryption and Authentication Model
@@ -124,7 +124,7 @@ const HomePage = () => {
               fontWeight: "bold",
               borderRadius: "25px",
               ":hover": {
-                backgroundColor: "#66bb6a",
+                backgroundColor: "#FFA500",
               },
             }}
           >
