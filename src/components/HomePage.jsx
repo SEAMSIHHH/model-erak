@@ -363,7 +363,7 @@ const HomePage = () => {
                       color: "#555",
                     }}
                   >
-                    Access your services securely!
+                    Access your services securely.
                   </Typography>
                 </Paper>
               </Grid>
