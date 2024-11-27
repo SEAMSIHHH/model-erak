@@ -57,6 +57,7 @@ function App() {
                 descriptor: detections.descriptor,
                 name: item.name,
                 image: item.image,
+                number: item.number,
               });
             }
           }

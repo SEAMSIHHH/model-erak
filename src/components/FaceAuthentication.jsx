@@ -24,6 +24,21 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
   const webcamRef = useRef(null);
   const [faceMatcher, setFaceMatcher] = useState(null);
 
+  useEffect(() => {
+    // Check if the webcam is accessible
+    const checkCameraAccess = async () => {
+      try {
+        await navigator.mediaDevices.getUserMedia({ video: true });
+        setCameraError(null); // Clear any previous errors if camera is accessible
+      } catch (err) {
+        setCameraError(
+          "Camera access denied. Please allow access to your camera."
+        );
+      }
+    };
+    checkCameraAccess();
+  });
+
   // Initialize face matcher when registered faces change
   useEffect(() => {
     if (registeredFaces.length > 0) {
@@ -89,12 +104,13 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
 
             if (matchedFace) {
               setMatch({
-                name: bestMatch.label,
-                image: matchedFace.image, // Only set image if matchedFace is found
+                name: matchedFace.name,
+                image: matchedFace.image,
+                number: matchedFace.number, // Only set image if matchedFace is found
               });
               onAuthenticated(bestMatch.label); // Return the match to the parent
             } else {
-              alert("No matching face data found for", bestMatch.label);
+              alert("No matching face data found");
             }
           } else {
             alert("Face matcher is not yet loaded.");
@@ -330,7 +346,13 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
         </Box>
       </Box>
 
-      {match && <AuthenticatedProfile name={match.name} image={match.image} />}
+      {match && (
+        <AuthenticatedProfile
+          name={match.name}
+          image={match.image}
+          number={match.number}
+        />
+      )}
     </Box>
   );
 };

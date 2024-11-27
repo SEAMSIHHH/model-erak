@@ -3,11 +3,13 @@
     { "name": "person 2", "image": "/dataset/2.jpg" },
     { "name": "person 3", "image": "/dataset/3.jpg" },
     { "name": "person 4", "image": "/dataset/4.jpg" },
-    { "name": "person 5", "image": "/dataset/5.jpg" },
+    { "name": "person 5", "image": "/dataset/5.jpg","number" : "8891 1162 0462"},
     { "name": "person 6", "image": "/dataset/6.jpg" },
     { "name": "person 7", "image": "/dataset/7.jpg" },
     { "name": "person 8", "image": "/dataset/8.jpg" },
     { "name": "person 9", "image": "/dataset/9.jpg" },
-    { "name": "person 10", "image": "/dataset/10.jpg" }
+    { "name": "person 10", "image": "/dataset/10.jpg" },
+    { "name": "person 11", "image": "/dataset/11.jpg" },
+    { "name": "person 12", "image": "/dataset/12.jpg" }
   ]
   
