@@ -10,6 +10,7 @@ import {
 import FaceAuthentication from "./components/FaceAuthentication";
 import AuthenticatedProfile from "./components/AuthenticatedProfile";
 import Header from "./components/Header";
+import HomePage from "./components/HomePage"; // Import HomePage component
 
 function App() {
   const [mode, setMode] = useState(1); // Authentication mode
@@ -103,8 +104,10 @@ function App() {
         <Header />
         <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 3 }}></Box>
         <Routes>
+          <Route path="/" element={<HomePage />} />{" "}
+          {/* Add HomePage as default */}
           <Route
-            path="/"
+            path="/authenticate"
             element={
               mode === 1 && (
                 <FaceAuthentication

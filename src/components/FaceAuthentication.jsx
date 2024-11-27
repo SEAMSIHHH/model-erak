@@ -16,6 +16,8 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
   const [match, setMatch] = useState(null);
   const [cameraError, setCameraError] = useState(null);
   const [facesStatus, setFacesStatus] = useState("no-face");
+  const [isFaceMatcherLoaded, setIsFaceMatcherLoaded] = useState(false);
+
   const [instructions, setInstructions] = useState({
     camera: false,
     lighting: false,
@@ -46,8 +48,11 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
         (face) =>
           new faceapi.LabeledFaceDescriptors(face.name, [face.descriptor])
       );
-      const matcher = new faceapi.FaceMatcher(labeledDescriptors, 0.5);
+      const matcher = new faceapi.FaceMatcher(labeledDescriptors, 0.45);
       setFaceMatcher(matcher);
+      setIsFaceMatcherLoaded(true); // Mark face matcher as loaded
+    } else {
+      setIsFaceMatcherLoaded(false); // Reset if there are no registered faces
     }
   }, [registeredFaces]);
 
@@ -227,7 +232,10 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           color="success"
           onClick={handleAuthenticate}
           disabled={
-            isAuthenticating || cameraError || facesStatus !== "one-face"
+            isAuthenticating ||
+            cameraError ||
+            facesStatus !== "one-face" ||
+            !isFaceMatcherLoaded
           }
           startIcon={<CameraAltIcon />}
           sx={{
@@ -241,28 +249,102 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           {isAuthenticating ? "Authenticating..." : "Authenticate"}
         </Button>
 
-        {/* Faces Detection Status */}
-        <Box sx={{ mt: 2, display: "flex", alignItems: "center", gap: 1 }}>
-          {facesStatus === "no-face" && (
-            <Box sx={{ color: "red", display: "flex", alignItems: "center" }}>
-              <WarningIcon sx={{ mr: 1 }} />
-              <Typography variant="body2">No face detected</Typography>
-            </Box>
-          )}
-          {facesStatus === "multiple-faces" && (
-            <Box
-              sx={{ color: "orange", display: "flex", alignItems: "center" }}
-            >
-              <WarningIcon sx={{ mr: 1 }} />
-              <Typography variant="body2">Multiple faces detected</Typography>
-            </Box>
-          )}
-          {facesStatus === "one-face" && (
-            <Box sx={{ color: "green", display: "flex", alignItems: "center" }}>
-              <CheckCircleIcon sx={{ mr: 1 }} />
-              <Typography variant="body2">Ready to Authenticate</Typography>
-            </Box>
-          )}
+        {/* Parent container to hold both status boxes side by side */}
+        <Box
+          sx={{
+            mt: 3,
+            display: "flex",
+            flexDirection: "row", // Arrange children in a row (side by side)
+            alignItems: "center", // Align items vertically centered
+            gap: 2, // Add spacing between the boxes
+            width: "100%", // Ensure boxes don't shrink if there is enough space
+            justifyContent: "space-evenly", // Spread them evenly across the available space
+          }}
+        >
+          {/* Faces Detection Status */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              border: "2px solid", // Add border
+              borderColor:
+                facesStatus === "no-face"
+                  ? "red"
+                  : facesStatus === "multiple-faces"
+                  ? "orange"
+                  : "#00e500", // Dynamic border color based on facesStatus
+              borderRadius: "8px", // Rounded corners
+              padding: "8px", // Padding inside the box
+              backgroundColor: "rgba(0, 0, 0, 0.1)", // Transparent background
+              transition: "border-color 0.3s ease", // Smooth transition for color change
+              flex: 1, // Makes the boxes responsive and evenly distributed
+            }}
+          >
+            {facesStatus === "no-face" && (
+              <Box sx={{ color: "red", display: "flex", alignItems: "center" }}>
+                <WarningIcon sx={{ mr: 1 }} />
+                <Typography variant="body2">No face detected</Typography>
+              </Box>
+            )}
+            {facesStatus === "multiple-faces" && (
+              <Box
+                sx={{ color: "orange", display: "flex", alignItems: "center" }}
+              >
+                <WarningIcon sx={{ mr: 1 }} />
+                <Typography variant="body2">Multiple faces detected</Typography>
+              </Box>
+            )}
+            {facesStatus === "one-face" && (
+              <Box
+                sx={{ color: "#00b200", display: "flex", alignItems: "center" }}
+              >
+                <CheckCircleIcon sx={{ mr: 1 }} />
+                <Typography variant="body2">Ready to Authenticate</Typography>
+              </Box>
+            )}
+          </Box>
+
+          {/* Face Matcher Loading Status */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              border: "2px solid", // Add border
+              borderColor: isFaceMatcherLoaded ? "#00e500" : "orange", // Dynamic border color
+              borderRadius: "8px", // Rounded corners
+              padding: "8px", // Add some padding inside the border box
+              backgroundColor: "rgba(0, 0, 0, 0.1)", // Transparent background
+              transition: "border-color 0.3s ease", // Smooth transition for color change
+              flex: 1, // Makes the boxes responsive and evenly distributed
+            }}
+          >
+            {!isFaceMatcherLoaded && (
+              <Box
+                sx={{
+                  color: "orange",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <CircularProgress size={20} sx={{ mr: 1 }} />
+                <Typography variant="body2">Loading face matcher...</Typography>
+              </Box>
+            )}
+            {isFaceMatcherLoaded && (
+              <Box
+                sx={{
+                  color: "#00b200",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <CheckCircleIcon sx={{ mr: 1 }} />
+                <Typography variant="body2">Face matcher is ready</Typography>
+              </Box>
+            )}
+          </Box>
         </Box>
 
         {/* Instructional Section */}

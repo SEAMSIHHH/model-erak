@@ -1,0 +1,343 @@
+import React from "react";
+import { Box, Typography, Button, Grid, Paper, Container } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Fade } from "react-awesome-reveal";
+
+const HomePage = () => {
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        minHeight: "100vh",
+        background:
+          "linear-gradient(180deg, #ffffff 10%, rgba(255, 190, 50, 0.1) 50%, rgba(10, 190, 40, 0.05) 100%)",
+      }}
+    >
+      {/* Hero Section */}
+      <Box
+        sx={{
+          py: 8,
+          textAlign: "center",
+          background:
+            "linear-gradient(180deg, rgba(255, 190, 50, 0.6), rgba(10, 190, 40, 0.4))",
+        }}
+      >
+        <Fade cascade>
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: "bold",
+              color: "#2234a8",
+              textShadow: "1px 1px 4px rgba(0, 0, 0, 0.3)",
+            }}
+          >
+            Welcome to SEAM
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              mt: 2,
+              color: "#4caf50",
+              fontWeight: "400",
+            }}
+          >
+            Secure Encryption and Authentication System
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            component={Link}
+            to="/authenticate"
+            sx={{
+              mt: 4,
+              px: 4,
+              py: 2,
+              backgroundColor: "#4caf50",
+              color: "white",
+              fontWeight: "bold",
+              borderRadius: "25px",
+              ":hover": {
+                backgroundColor: "#66bb6a",
+              },
+            }}
+          >
+            Get Started
+          </Button>
+        </Fade>
+      </Box>
+
+      {/* Features Section */}
+      <Container sx={{ my: 8 }}>
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: "center",
+            fontWeight: "bold",
+            mb: 4,
+            color: "#2234a8",
+          }}
+        >
+          Why Choose SEAM?
+        </Typography>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={4}>
+            <Fade>
+              <Paper
+                elevation={3}
+                sx={{
+                  p: 4,
+                  borderRadius: "12px",
+                  backgroundColor: "#e3f2fd",
+                  height: "100%",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", color: "#1976d2", mb: 2 }}
+                >
+                  Secure Authentication
+                </Typography>
+                <Typography variant="body1" sx={{ color: "#555" }}>
+                  Liveness detection ensures only authorized users access
+                  services.
+                </Typography>
+              </Paper>
+            </Fade>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Fade>
+              <Paper
+                elevation={3}
+                sx={{
+                  p: 4,
+                  borderRadius: "12px",
+                  backgroundColor: "#e8f5e9",
+                  height: "100%",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", color: "#2e7d32", mb: 2 }}
+                >
+                  Tamper-Proof Models
+                </Typography>
+                <Typography variant="body1" sx={{ color: "#555" }}>
+                  Encryption and obfuscation protect models from reverse
+                  engineering.
+                </Typography>
+              </Paper>
+            </Fade>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Fade>
+              <Paper
+                elevation={3}
+                sx={{
+                  p: 4,
+                  borderRadius: "12px",
+                  backgroundColor: "#fff3e0",
+                  height: "100%",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", color: "#ef6c00", mb: 2 }}
+                >
+                  Optimized for Networks
+                </Typography>
+                <Typography variant="body1" sx={{ color: "#555" }}>
+                  Lightweight models ensure smooth transactions even on 3G
+                  networks.
+                </Typography>
+              </Paper>
+            </Fade>
+          </Grid>
+        </Grid>
+      </Container>
+
+      {/* Process Flow */}
+      <Box
+        sx={{
+          py: 8,
+          backgroundColor: "#f9f9f9",
+          textAlign: "center",
+        }}
+      >
+        <Fade>
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              color: "#2234a8",
+              mb: 4,
+            }}
+          >
+            How SEAM Works
+          </Typography>
+          <Container>
+            <Typography
+              variant="body1"
+              sx={{
+                mb: 6,
+                color: "#555",
+                lineHeight: "1.6",
+              }}
+            >
+              SEAM integrates advanced face authentication and AI-driven
+              liveness checks directly into your browser. Here’s how it works:
+            </Typography>
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={3}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    p: 3,
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#4caf50",
+                      mb: 2,
+                    }}
+                  >
+                    Step 1
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "#555",
+                    }}
+                  >
+                    Access SEAM via a secure desktop browser.
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    p: 3,
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#4caf50",
+                      mb: 2,
+                    }}
+                  >
+                    Step 2
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "#555",
+                    }}
+                  >
+                    Capture your face via webcam with real-time liveness
+                    detection.
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    p: 3,
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#4caf50",
+                      mb: 2,
+                    }}
+                  >
+                    Step 3
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "#555",
+                    }}
+                  >
+                    Authenticate using secure AI models.
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Paper
+                  elevation={3}
+                  sx={{
+                    p: 3,
+                    borderRadius: "12px",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#4caf50",
+                      mb: 2,
+                    }}
+                  >
+                    Step 4
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: "#555",
+                    }}
+                  >
+                    Access your services securely!
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        </Fade>
+      </Box>
+
+      {/* Footer */}
+      <Box
+        sx={{
+          py: 4,
+          backgroundColor: "#2234a8",
+          textAlign: "center",
+          color: "white",
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{
+            mb: 2,
+          }}
+        >
+          © 2024 SEAM. All Rights Reserved.
+        </Typography>
+        <Button
+          variant="contained"
+          component={Link}
+          to="/contact"
+          sx={{
+            backgroundColor: "#4caf50",
+            ":hover": {
+              backgroundColor: "#66bb6a",
+            },
+          }}
+        >
+          Contact Us
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export default HomePage;
