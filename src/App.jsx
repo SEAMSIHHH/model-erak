@@ -125,6 +125,11 @@ function App() {
                       (face) => face.name === authenticatedUser
                     )?.image
                   }
+                  number={
+                    registeredFaces.find(
+                      (face) => face.name === authenticatedUser
+                    )?.number
+                  }
                 />
               ) : (
                 <Typography variant="h5" sx={{ textAlign: "center", mt: 5 }}>

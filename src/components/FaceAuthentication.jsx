@@ -42,8 +42,11 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
   // Initialize face matcher when registered faces change
   useEffect(() => {
     if (registeredFaces.length > 0) {
-      const descriptors = registeredFaces.map((face) => face.descriptor);
-      const matcher = new faceapi.FaceMatcher(descriptors, 0.5);
+      const labeledDescriptors = registeredFaces.map(
+        (face) =>
+          new faceapi.LabeledFaceDescriptors(face.name, [face.descriptor])
+      );
+      const matcher = new faceapi.FaceMatcher(labeledDescriptors, 0.5);
       setFaceMatcher(matcher);
     }
   }, [registeredFaces]);
@@ -108,7 +111,7 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
                 image: matchedFace.image,
                 number: matchedFace.number, // Only set image if matchedFace is found
               });
-              onAuthenticated(bestMatch.label); // Return the match to the parent
+              onAuthenticated(matchedFace.name); // Return the match to the parent
             } else {
               alert("No matching face data found");
             }

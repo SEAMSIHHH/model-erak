@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper, Box, Typography, Avatar } from "@mui/material";
 
-const AuthenticatedProfile = ({ name, image }) => {
+const AuthenticatedProfile = ({ name, image, number }) => {
   if (!name) return null;
 
   return (
@@ -104,7 +104,7 @@ const AuthenticatedProfile = ({ name, image }) => {
               color: "#555",
             }}
           >
-            Your Aadhaar Number: 1111 2222 3333
+            Your Aadhaar Number: {number}
           </Typography>
         </Box>
         <Box>
