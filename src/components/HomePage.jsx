@@ -85,7 +85,8 @@ const HomePage = () => {
           py: 8,
           textAlign: "center",
           background:
-            "linear-gradient(180deg, rgba(255, 190, 50, 0.6), rgba(10, 190, 40, 0.4))",
+            "linear-gradient(180deg, white 18%, rgba(255, 190, 50, 0.8) 65%, rgba(10, 190, 40, 0.7) 100%) ",
+          borderRadius: "12px",
         }}
       >
         <Fade cascade>
@@ -141,7 +142,9 @@ const HomePage = () => {
             textAlign: "center",
             fontWeight: "bold",
             mb: 4,
-            color: "#2234a8",
+            color:
+              "linear-gradient(135deg, white 12%, rgba(10, 190, 40, 0.9) 100%)",
+            borderRadius: "12px",
           }}
         >
           Why Choose SEAM?
@@ -226,8 +229,9 @@ const HomePage = () => {
       <Box
         sx={{
           py: 8,
-          backgroundColor: "#f9f9f9",
+          backgroundColor: "#BBDEFB",
           textAlign: "center",
+          borderRadius: "12px",
         }}
       >
         <Fade>
@@ -248,6 +252,7 @@ const HomePage = () => {
                 mb: 6,
                 color: "#555",
                 lineHeight: "1.6",
+                fontweight: "bold",
               }}
             >
               SEAM integrates advanced face authentication and AI-driven
@@ -381,6 +386,7 @@ const HomePage = () => {
             fontWeight: "bold",
             mb: 1,
             color: indianColors.primary,
+            borderRadius: "12px",
           }}
         >
           Development Journey
@@ -391,6 +397,7 @@ const HomePage = () => {
             width: "100%",
             maxWidth: 800,
             margin: "auto",
+            borderRadius: "12px",
           }}
         >
           <Slider {...sliderSettings}>
@@ -447,6 +454,7 @@ const HomePage = () => {
           backgroundColor: "#2234a8",
           textAlign: "center",
           color: "white",
+          borderRadius: "12px",
         }}
       >
         <Typography
