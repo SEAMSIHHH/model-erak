@@ -107,7 +107,7 @@ const HomePage = () => {
               fontWeight: "400",
             }}
           >
-            Secure Encryption and Authentication System
+            Secure Encryption and Authentication Model
           </Typography>
           <Button
             variant="contained"
