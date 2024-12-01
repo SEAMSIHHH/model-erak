@@ -17,6 +17,32 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
   const [cameraError, setCameraError] = useState(null);
   const [facesStatus, setFacesStatus] = useState("no-face");
   const [isFaceMatcherLoaded, setIsFaceMatcherLoaded] = useState(false);
+  const [aadhaarNumber, setAadhaarNumber] = useState("");
+  const [isValidAadhaar, setIsValidAadhaar] = useState(false);
+  const [linkedFace, setLinkedFace] = useState(null);
+
+  const handleAadhaarChange = (e) => {
+    const value = e.target.value.replace(/\s+/g, ""); // Remove spaces
+    if (/^\d{0,12}$/.test(value)) {
+      const formattedValue = value
+        .replace(/(\d{4})(?=\d)/g, "$1 ") // Add spaces every 4 digits
+        .trim();
+      setAadhaarNumber(formattedValue);
+
+      if (value.length === 12) {
+        const faceData = registeredFaces.find((face) => face.number === value);
+        if (faceData) {
+          setLinkedFace(faceData);
+          setIsValidAadhaar(true);
+        } else {
+          setIsValidAadhaar(false);
+          alert("Aadhaar number not found in the database.");
+        }
+      } else {
+        setIsValidAadhaar(false);
+      }
+    }
+  };
 
   const [instructions, setInstructions] = useState({
     camera: false,
@@ -84,8 +110,13 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
   }, []);
 
   const handleAuthenticate = async () => {
-    setIsAuthenticating(true);
+    if (!linkedFace) {
+      alert("No face data linked with this Aadhaar number.");
+      return;
+    }
+
     const imageSrc = webcamRef.current.getScreenshot(); // Get base64 image from webcam
+    setIsAuthenticating(true);
 
     try {
       const img = new Image();
@@ -97,38 +128,23 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           .withFaceLandmarks()
           .withFaceDescriptor();
 
-        if (detections) {
-          if (faceMatcher) {
-            const bestMatch = faceMatcher.findBestMatch(detections.descriptor);
-            console.log("bestMatch.label:", bestMatch.label);
-            console.log("Registered faces:", registeredFaces);
+        if (detections && faceMatcher) {
+          const bestMatch = faceMatcher.findBestMatch(detections.descriptor);
 
-            // Ensure case-insensitive comparison and trimming spaces
-            const matchedFace = registeredFaces.find(
-              (face) =>
-                face.name.trim().toLowerCase() ===
-                bestMatch.label.trim().toLowerCase()
-            );
-
-            if (matchedFace) {
-              setMatch({
-                name: matchedFace.name,
-                image: matchedFace.image,
-                number: matchedFace.number, // Only set image if matchedFace is found
-              });
-              onAuthenticated(matchedFace.name); // Return the match to the parent
-            } else {
-              alert("No matching face data found");
-            }
+          if (
+            bestMatch.label.trim().toLowerCase() ===
+            linkedFace.name.trim().toLowerCase()
+          ) {
+            onAuthenticated(linkedFace.name); // Redirect on success
           } else {
-            alert("Face matcher is not yet loaded.");
+            alert("Face authentication failed.");
           }
         } else {
-          alert("No face detected!");
+          alert("No face detected.");
         }
       };
     } catch (error) {
-      console.error("Error during authentication:", error);
+      console.error("Authentication error:", error);
     }
 
     setIsAuthenticating(false);
@@ -226,12 +242,46 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           </Box>
         )}
 
+        <Box sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+          <Typography
+            variant="body5"
+            sx={{ flexShrink: 0, color: "#000", fontweight: "bold" }}
+          >
+            Enter Aadhaar Number:
+          </Typography>
+          <input
+            type="text"
+            value={aadhaarNumber}
+            onChange={handleAadhaarChange}
+            placeholder="XXXX XXXX XXXX"
+            style={{
+              padding: "5px",
+              fontSize: "18px",
+              width: "60%",
+              borderRadius: "8px",
+              border: "1px solid gray",
+            }}
+          />
+        </Box>
+
+        {/* Conditional Webcam and Authentication */}
+        {isValidAadhaar && linkedFace && (
+          <Box>
+            <Typography variant="body5" sx={{ mb: 2, color: "#28a745" }}>
+              Valid Aadhaar number Verified
+            </Typography>
+            {/* Your existing webcam and Authenticate button */}
+          </Box>
+        )}
+
         {/* Authentication Button */}
         <Button
           variant="contained"
           color="success"
           onClick={handleAuthenticate}
           disabled={
+            !isValidAadhaar ||
+            !linkedFace ||
             isAuthenticating ||
             cameraError ||
             facesStatus !== "one-face" ||
