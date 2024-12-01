@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper, Box, Typography, Avatar } from "@mui/material";
 
-const AuthenticatedProfile = ({ name, image }) => {
+const AuthenticatedProfile = ({ name, image, number }) => {
   if (!name) return null;
 
   return (
@@ -79,9 +79,10 @@ const AuthenticatedProfile = ({ name, image }) => {
       <Typography
         variant="h6"
         gutterBottom
-        sx={{ fontWeight: "500", color: "#333", mt: 2 }}
+        sx={{ fontWeight: "500", color: "#000", mt: 2 }}
       >
-        Welcome, <span style={{ color: "#1976d2" }}>{name}</span>!
+        Welcome,{" "}
+        <span style={{ color: "#2234a8", fontWeight: "bold" }}>{name}</span>!
       </Typography>
 
       {/* User Details */}
@@ -99,12 +100,12 @@ const AuthenticatedProfile = ({ name, image }) => {
           <Typography
             variant="subtitle1"
             sx={{
-              fontWeight: "500",
+              fontWeight: "bold",
               mb: 1,
-              color: "#555",
+              color: "#000",
             }}
           >
-            Your Aadhaar Number: 1111 2222 3333
+            Your Aadhaar Number: {number}
           </Typography>
         </Box>
         <Box>

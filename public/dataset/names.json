@@ -1,15 +1,17 @@
 [
-    { "name": "person 1", "image": "/dataset/1.jpg" },
-    { "name": "person 2", "image": "/dataset/2.jpg" },
-    { "name": "person 3", "image": "/dataset/3.jpg" },
-    { "name": "person 4", "image": "/dataset/4.jpg" },
-    { "name": "person 5", "image": "/dataset/5.jpg","number" : "8891 1162 0462"},
-    { "name": "person 6", "image": "/dataset/6.jpg" },
-    { "name": "person 7", "image": "/dataset/7.jpg" },
-    { "name": "person 8", "image": "/dataset/8.jpg" },
-    { "name": "person 9", "image": "/dataset/9.jpg" },
-    { "name": "person 10", "image": "/dataset/10.jpg" },
-    { "name": "person 11", "image": "/dataset/11.jpg" },
-    { "name": "person 12", "image": "/dataset/12.jpg" }
+    { "name": "Shyam Gokul S", "image": "/dataset/1.jpg","number" : "4207 3012 6222" },
+    { "name": "Sriram S", "image": "/dataset/2.jpg","number" : "8891 1162 0462" },
+    { "name": "Kovarthan Manikandan", "image": "/dataset/3.jpg","number" : "8954 6333 2392" },
+    { "name": "Ajay C", "image": "/dataset/4.jpg","number" : "8110 8593 1903" },
+    { "name": "Deepak Chandrasekar", "image": "/dataset/5.jpg","number" : "8891 1162 0462"},
+    { "name": "Abhimanya S", "image": "/dataset/6.jpg","number" : "8891 1162 0462" },
+    { "name": "Manikandan", "image": "/dataset/7.jpg","number" : "8891 1162 0462" },
+    { "name": "Jeevan Varghese", "image": "/dataset/8.jpg","number" : "8891 1162 0462" },
+    { "name": "Vaishnavi Srinivasan", "image": "/dataset/9.jpg","number" : "8891 1162 0462" },
+    { "name": "Manimegalai Rajkumar", "image": "/dataset/10.jpg","number" : "8891 1162 0462" },
+    { "name": "Sujatha Subramaniam", "image": "/dataset/11.jpg","number" : "8891 1162 0462" },
+    { "name": "Nandha Kishore A P", "image": "/dataset/12.jpg","number" : "6775 2113 4287" },
+    { "name": "Muthu Harish T", "image": "/dataset/13.jpg","number" : "4163 5279 2691" },
+    { "name": "Sukirda", "image": "/dataset/14.jpg","number" : "4163 5279 2691" }
   ]
   

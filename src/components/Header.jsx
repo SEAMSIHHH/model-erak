@@ -43,7 +43,7 @@ const Header = () => {
           lineHeight: 1.4,
         }}
       >
-        Secure Encryption and Authentication System
+        Secure Encryption and Authentication Model
       </Typography>
     </Box>
   );
