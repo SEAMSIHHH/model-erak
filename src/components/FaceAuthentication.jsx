@@ -245,34 +245,49 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
         <Box sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
           <Typography
             variant="body5"
-            sx={{ flexShrink: 0, color: "#000", fontweight: "bold" }}
+            sx={{ flexShrink: 0, color: "#000", fontWeight: "bold" }}
           >
             Enter Aadhaar Number:
           </Typography>
-          <input
-            type="text"
-            value={aadhaarNumber}
-            onChange={handleAadhaarChange}
-            placeholder="XXXX XXXX XXXX"
-            style={{
-              padding: "5px",
-              fontSize: "18px",
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
               width: "60%",
-              borderRadius: "8px",
-              border: "1px solid gray",
             }}
-          />
-        </Box>
-
-        {/* Conditional Webcam and Authentication */}
-        {isValidAadhaar && linkedFace && (
-          <Box>
-            <Typography variant="body5" sx={{ mb: 2, color: "#28a745" }}>
-              Valid Aadhaar number Verified
-            </Typography>
-            {/* Your existing webcam and Authenticate button */}
+          >
+            <input
+              type="text"
+              value={aadhaarNumber}
+              onChange={handleAadhaarChange}
+              placeholder="XXXX XXXX XXXX"
+              style={{
+                padding: "5px",
+                fontSize: "18px",
+                width: "100%",
+                borderRadius: "8px",
+                border: `2px solid ${
+                  isValidAadhaar ? "green" : aadhaarNumber ? "red" : "gray"
+                }`,
+                outline: "none",
+                transition: "border-color 0.3s",
+              }}
+            />
+            {aadhaarNumber && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  right: "10px",
+                  color: isValidAadhaar ? "green" : "red",
+                  fontSize: "15px",
+                }}
+              >
+                {isValidAadhaar ? "✔️ Valid" : "❌ Invalid"}
+              </Box>
+            )}
           </Box>
-        )}
+        </Box>
 
         {/* Authentication Button */}
         <Button
