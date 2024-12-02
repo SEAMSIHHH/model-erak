@@ -136,7 +136,10 @@ function App() {
                   }
                 />
               ) : (
-                <Typography variant="h5" sx={{ textAlign: "center", mt: 5 }}>
+                <Typography
+                  variant="h5"
+                  sx={{ textAlign: "center", mt: 5, color: "#000" }}
+                >
                   Unauthorized Access
                 </Typography>
               )

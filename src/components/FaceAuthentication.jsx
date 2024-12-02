@@ -396,29 +396,31 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           maxWidth: "300px",
         }}
       >
-        <Typography variant="h6">Follow these instructions:</Typography>
+        <Typography variant="h6" sx={{ color: "#000", fontweight: "bold" }}>
+          Follow these instructions:
+        </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <RemoveRedEyeIcon sx={{ color: "green" }} />
-            <Typography variant="body2">
+            <Typography variant="body5" sx={{ color: "#000" }}>
               Look directly at your camera.
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <CheckCircleIcon sx={{ color: "green" }} />
-            <Typography variant="body2">
+            <Typography variant="body5" sx={{ color: "#000" }}>
               Position your face within the green frame.
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <LightModeIcon sx={{ color: "green" }} />
-            <Typography variant="body2">
+            <Typography variant="body5" sx={{ color: "#000" }}>
               Ensure good lighting on your face.
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <VisibilityOffIcon sx={{ color: "green" }} />
-            <Typography variant="body2">
+            <Typography variant="body5" sx={{ color: "#000" }}>
               Remove face coverings, eyeglasses or masks.
             </Typography>
           </Box>
