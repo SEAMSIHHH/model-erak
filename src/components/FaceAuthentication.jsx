@@ -155,97 +155,35 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh", // Ensure the content fits within the viewport
-        backgroundColor: "#ffffff", // Set background color to white
-        flexDirection: "column",
-        gap: 1, // Adjusted gap for better spacing
-        padding: "10px", // Add padding to make sure content is spaced well
+        alignItems: "flex-start",
+        minHeight: "100vh",
+        backgroundColor: "#ffffff",
+        padding: "20px",
+        gap: 4, // Space between columns
       }}
     >
+      {/* Left Section */}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          p: 5,
-          borderRadius: "25px",
-          backgroundColor: "#FAFAF5",
-          boxShadow: 6,
-          border: "2px solid lightgrey", // Thicker grey border
-          width: "100%",
-          maxWidth: "420px", // Makes the box more centered and responsive
-          flex: 1, // Allow the content to fill the available space
-          overflow: "hidden", // Prevent scrolling
+          gap: 2,
+          flex: 1,
+          maxWidth: "300px",
         }}
       >
-        {cameraError && (
-          <Box
-            sx={{
-              padding: "10px",
-              backgroundColor: "#ffebee",
-              borderRadius: "8px",
-              color: "red",
-              marginBottom: "15px",
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="body2">{cameraError}</Typography>
-          </Box>
-        )}
-
-        {/* Only show webcam box if camera is accessible */}
-        {!cameraError && (
-          <Box
-            sx={{
-              position: "relative",
-              width: "100%",
-              height: "300px", // Set a fixed height for the webcam preview
-              backgroundColor: "white",
-              borderRadius: "18px",
-              overflow: "hidden",
-              boxShadow: 3,
-              mb: 3, // Adjusted margin for spacing
-            }}
-          >
-            <ReactWebcam
-              ref={webcamRef}
-              audio={false}
-              screenshotFormat="image/jpeg"
-              videoConstraints={{
-                facingMode: "user",
-              }}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover", // Ensures webcam fills the container
-              }}
-            />
-
-            {/* Visual Border for Alignment */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: "15%",
-                left: "20%",
-                right: "20%",
-                bottom: "25%",
-                border: "2px dashed #00C853", // Dashed border for alignment
-                borderRadius: "12px",
-                boxSizing: "border-box",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                pointerEvents: "none", // Prevent interaction with the border
-              }}
-            ></Box>
-          </Box>
-        )}
-
-        <Box sx={{ mb: 2, display: "flex", alignItems: "center", gap: 1 }}>
+        {/* Aadhaar Input */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+            width: "100%",
+          }}
+        >
           <Typography
             variant="body5"
-            sx={{ flexShrink: 0, color: "#000", fontWeight: "bold" }}
+            sx={{ color: "#000", fontWeight: "bold" }}
           >
             Enter Aadhaar Number:
           </Typography>
@@ -254,7 +192,7 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
               position: "relative",
               display: "flex",
               alignItems: "center",
-              width: "60%",
+              width: "100%",
             }}
           >
             <input
@@ -263,8 +201,8 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
               onChange={handleAadhaarChange}
               placeholder="XXXX XXXX XXXX"
               style={{
-                padding: "5px",
-                fontSize: "18px",
+                padding: "10px",
+                fontSize: "16px",
                 width: "100%",
                 borderRadius: "8px",
                 border: `2px solid ${
@@ -289,7 +227,140 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           </Box>
         </Box>
 
-        {/* Authentication Button */}
+        {/* Face Matcher Status */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            border: "2px solid",
+            borderColor: isFaceMatcherLoaded ? "#00e500" : "orange",
+            borderRadius: "8px",
+            padding: "8px",
+            backgroundColor: "rgba(0, 0, 0, 0.1)",
+            transition: "border-color 0.3s ease",
+          }}
+        >
+          {isFaceMatcherLoaded ? (
+            <Box
+              sx={{
+                color: "#00b200",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <CheckCircleIcon sx={{ mr: 1 }} />
+              <Typography variant="body2">Face matcher is ready</Typography>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                color: "orange",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress size={20} sx={{ mr: 1 }} />
+              <Typography variant="body2">Loading face matcher...</Typography>
+            </Box>
+          )}
+        </Box>
+
+        {/* Face Detection Status */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            border: "2px solid",
+            borderColor:
+              facesStatus === "no-face"
+                ? "red"
+                : facesStatus === "multiple-faces"
+                ? "orange"
+                : "#00e500",
+            borderRadius: "8px",
+            padding: "8px",
+            backgroundColor: "rgba(0, 0, 0, 0.1)",
+            transition: "border-color 0.3s ease",
+          }}
+        >
+          {facesStatus === "no-face" && (
+            <Box sx={{ color: "red", display: "flex", alignItems: "center" }}>
+              <WarningIcon sx={{ mr: 1 }} />
+              <Typography variant="body2">No face detected</Typography>
+            </Box>
+          )}
+          {facesStatus === "multiple-faces" && (
+            <Box
+              sx={{ color: "orange", display: "flex", alignItems: "center" }}
+            >
+              <WarningIcon sx={{ mr: 1 }} />
+              <Typography variant="body2">Multiple faces detected</Typography>
+            </Box>
+          )}
+          {facesStatus === "one-face" && (
+            <Box
+              sx={{ color: "#00b200", display: "flex", alignItems: "center" }}
+            >
+              <CheckCircleIcon sx={{ mr: 1 }} />
+              <Typography variant="body2">Ready to Authenticate</Typography>
+            </Box>
+          )}
+        </Box>
+      </Box>
+
+      {/* Center Section (Webcam and Button) */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 3,
+          flex: 1.5,
+          maxWidth: "600px",
+        }}
+      >
+        {/* Webcam Feed */}
+        <Box
+          sx={{
+            position: "relative",
+            width: "100%",
+            height: "300px",
+            backgroundColor: "white",
+            borderRadius: "18px",
+            overflow: "hidden",
+            boxShadow: 3,
+          }}
+        >
+          <ReactWebcam
+            ref={webcamRef}
+            audio={false}
+            screenshotFormat="image/jpeg"
+            videoConstraints={{
+              facingMode: "user",
+            }}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              top: "15%",
+              left: "20%",
+              right: "20%",
+              bottom: "25%",
+              border: "2px dashed #00C853",
+              borderRadius: "12px",
+              pointerEvents: "none",
+            }}
+          ></Box>
+        </Box>
+
+        {/* Authenticate Button */}
         <Button
           variant="contained"
           color="success"
@@ -304,194 +375,52 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           }
           startIcon={<CameraAltIcon />}
           sx={{
+            width: "100%", // Makes the button as wide as the parent
             borderRadius: "12px",
-            width: "100%", // Takes up full width of the container
-            maxWidth: "420px", // Limits the maximum width
             textTransform: "none",
-            fontSize: "16px", // More readable font size
+            fontSize: "18px",
+            padding: "10px 20px",
           }}
         >
           {isAuthenticating ? "Authenticating..." : "Authenticate"}
         </Button>
+      </Box>
 
-        {/* Parent container to hold both status boxes side by side */}
-        <Box
-          sx={{
-            mt: 3,
-            display: "flex",
-            flexDirection: "row", // Arrange children in a row (side by side)
-            alignItems: "center", // Align items vertically centered
-            gap: 2, // Add spacing between the boxes
-            width: "100%", // Ensure boxes don't shrink if there is enough space
-            justifyContent: "space-evenly", // Spread them evenly across the available space
-          }}
-        >
-          {/* Faces Detection Status */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              border: "2px solid", // Add border
-              borderColor:
-                facesStatus === "no-face"
-                  ? "red"
-                  : facesStatus === "multiple-faces"
-                  ? "orange"
-                  : "#00e500", // Dynamic border color based on facesStatus
-              borderRadius: "8px", // Rounded corners
-              padding: "8px", // Padding inside the box
-              backgroundColor: "rgba(0, 0, 0, 0.1)", // Transparent background
-              transition: "border-color 0.3s ease", // Smooth transition for color change
-              flex: 1, // Makes the boxes responsive and evenly distributed
-            }}
-          >
-            {facesStatus === "no-face" && (
-              <Box sx={{ color: "red", display: "flex", alignItems: "center" }}>
-                <WarningIcon sx={{ mr: 1 }} />
-                <Typography variant="body2">No face detected</Typography>
-              </Box>
-            )}
-            {facesStatus === "multiple-faces" && (
-              <Box
-                sx={{ color: "orange", display: "flex", alignItems: "center" }}
-              >
-                <WarningIcon sx={{ mr: 1 }} />
-                <Typography variant="body2">Multiple faces detected</Typography>
-              </Box>
-            )}
-            {facesStatus === "one-face" && (
-              <Box
-                sx={{ color: "#00b200", display: "flex", alignItems: "center" }}
-              >
-                <CheckCircleIcon sx={{ mr: 1 }} />
-                <Typography variant="body2">Ready to Authenticate</Typography>
-              </Box>
-            )}
+      {/* Right Section (Instructions) */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          flex: 1,
+          maxWidth: "300px",
+        }}
+      >
+        <Typography variant="h6">Follow these instructions:</Typography>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <RemoveRedEyeIcon sx={{ color: "green" }} />
+            <Typography variant="body2">
+              Look directly at your camera.
+            </Typography>
           </Box>
-
-          {/* Face Matcher Loading Status */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              border: "2px solid", // Add border
-              borderColor: isFaceMatcherLoaded ? "#00e500" : "orange", // Dynamic border color
-              borderRadius: "8px", // Rounded corners
-              padding: "8px", // Add some padding inside the border box
-              backgroundColor: "rgba(0, 0, 0, 0.1)", // Transparent background
-              transition: "border-color 0.3s ease", // Smooth transition for color change
-              flex: 1, // Makes the boxes responsive and evenly distributed
-            }}
-          >
-            {!isFaceMatcherLoaded && (
-              <Box
-                sx={{
-                  color: "orange",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <CircularProgress size={20} sx={{ mr: 1 }} />
-                <Typography variant="body2">Loading face matcher...</Typography>
-              </Box>
-            )}
-            {isFaceMatcherLoaded && (
-              <Box
-                sx={{
-                  color: "#00b200",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <CheckCircleIcon sx={{ mr: 1 }} />
-                <Typography variant="body2">Face matcher is ready</Typography>
-              </Box>
-            )}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <CheckCircleIcon sx={{ color: "green" }} />
+            <Typography variant="body2">
+              Position your face within the green frame.
+            </Typography>
           </Box>
-        </Box>
-
-        {/* Instructional Section */}
-        <Box sx={{ mt: 4, width: "100%" }}>
-          <Typography variant="h6" sx={{ mb: 2, textAlign: "start" }}>
-            Follow these instructions:
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column", // Stack icons and texts vertically
-              alignItems: "flex-start", // Align items to the start (left)
-              gap: 1, // Reduced gap to make instructions closer together
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row", // Align icon and text horizontally
-                alignItems: "center", // Align icon and text vertically centered
-                color: instructions.camera ? "green" : "green",
-                mb: 1, // Reduced margin at the bottom to make it closer
-              }}
-            >
-              <RemoveRedEyeIcon
-                sx={{ color: instructions.camera ? "green" : "green" }}
-              />
-              <Typography variant="body5" sx={{ ml: 2 }}>
-                Look directly at your camera and stay still
-              </Typography>
-            </Box>
-
-            {/* New instruction for alignment */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row", // Align icon and text horizontally
-                alignItems: "center", // Align icon and text vertically centered
-                color: instructions.camera ? "green" : "green",
-                mb: 1, // Reduced margin
-              }}
-            >
-              <CheckCircleIcon
-                sx={{ color: instructions.camera ? "green" : "green" }}
-              />
-              <Typography variant="body5" sx={{ ml: 2 }}>
-                Position your face within the green frame
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row", // Align icon and text horizontally
-                alignItems: "center", // Align icon and text vertically centered
-                color: instructions.lighting ? "green" : "green",
-                mb: 1, // Reduced margin
-              }}
-            >
-              <LightModeIcon
-                sx={{ color: instructions.lighting ? "green" : "green" }}
-              />
-              <Typography variant="body5" sx={{ ml: 2 }}>
-                Ensure good lighting on your face
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row", // Align icon and text horizontally
-                alignItems: "center", // Align icon and text vertically centered
-                color: instructions.lighting ? "green" : "green",
-                mb: 1, // Reduced margin
-              }}
-            >
-              <VisibilityOffIcon
-                sx={{ color: instructions.lighting ? "green" : "green" }}
-              />
-              <Typography variant="body5" sx={{ ml: 2 }}>
-                Remove any face coverings, eyeglasses and masks
-              </Typography>
-            </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <LightModeIcon sx={{ color: "green" }} />
+            <Typography variant="body2">
+              Ensure good lighting on your face.
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <VisibilityOffIcon sx={{ color: "green" }} />
+            <Typography variant="body2">
+              Remove face coverings, eyeglasses or masks.
+            </Typography>
           </Box>
         </Box>
       </Box>
