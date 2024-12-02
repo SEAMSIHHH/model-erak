@@ -137,7 +137,7 @@ const FaceAuthentication = ({ registeredFaces, onAuthenticated }) => {
           ) {
             onAuthenticated(linkedFace.name); // Redirect on success
           } else {
-            alert("Face authentication failed.");
+            alert("Face authentication failed. Please try again.");
           }
         } else {
           alert("No face detected.");
